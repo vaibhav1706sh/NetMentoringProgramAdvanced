@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/LayeredArchitectures/Task-1/CartingService/CartingService/obj
+/LayeredArchitectures/Task-1/CartingService/CartingService/bin/Debug/net6.0
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+/.vs/NetMentoringAdvanced/v17
+/.vs/NetMentoringAdvanced/FileContentIndex
