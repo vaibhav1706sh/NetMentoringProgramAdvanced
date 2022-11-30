@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace CartingService.Models
 {
     public class ItemModel
     {
-        public string CartId { get; set; }
+        [Required]
         public string Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public ImageModel? Image { get; set; }
+        [Required]
         public decimal Price { get; set; }
         public int Quantity { get; set; }
     }

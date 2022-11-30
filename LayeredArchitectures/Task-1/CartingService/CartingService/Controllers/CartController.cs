@@ -1,4 +1,5 @@
 ﻿using CartingService.BusinessLogicLayer;
+using CartingService.Entity;
 using CartingService.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace CartingService.Controllers
         }
 
         [HttpGet]
-        [Route("{cartId}")]
+        [Route("items/{cartId}")]
         public IActionResult Get(string cartId)
         {
             if (string.IsNullOrEmpty(cartId)) return BadRequest("cartId cannot be null or empty");
@@ -23,11 +24,11 @@ namespace CartingService.Controllers
         }
 
         [HttpPost]
-        [Route("item")]
-        public IActionResult AddItem(ItemModel model)
+        [Route("{cartId}/item/add")]
+        public IActionResult AddItem(string cartId, ItemModel model)
         {
-            if (string.IsNullOrEmpty(model.CartId)) return BadRequest("cartId cannot be null or empty");
-            _cartService.AddItemToCart(model);
+            if (string.IsNullOrEmpty(cartId)) return BadRequest("cartId cannot be null or empty");
+            _cartService.AddItemToCart(model, cartId);
             return Ok();
         }
 
@@ -35,13 +36,14 @@ namespace CartingService.Controllers
         [Route("add")]
         public IActionResult AddCart(CartModel model)
         {
-            if (string.IsNullOrEmpty(model.CartId)) return BadRequest("cartId cannot be null or empty");
+            if (string.IsNullOrEmpty(model.Id)) return BadRequest("cartId cannot be null or empty");
+            if(_cartService.CartExists(model.Id)) return BadRequest($"cart already exists with cartId:{model.Id}");
             _cartService.AddCart(model);
             return Ok();
         }
 
         [HttpDelete]
-        [Route("item/{cartId}/{itemId}")]
+        [Route("{cartId}/item/{itemId}")]
         public IActionResult RemoveItem(string cartId, string itemId)
         {
             if (string.IsNullOrEmpty(cartId) || string.IsNullOrEmpty(itemId)) return BadRequest("cartId and/or itemId cannot be null or empty");

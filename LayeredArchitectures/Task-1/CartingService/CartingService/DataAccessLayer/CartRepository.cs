@@ -32,12 +32,12 @@ namespace CartingService.DataAccessLayer
 
         public Cart GetCart(string cartId)
         {
-            return CartCollection.Find(x => x.CartId == cartId)?.FirstOrDefault();
+            return CartCollection.Find(x => x.Id == cartId)?.FirstOrDefault();
         }
 
         public List<Item> GetItems(string cartId)
         {
-            return CartCollection.Find(x => x.CartId == cartId)?.FirstOrDefault()?.Items;
+            return CartCollection.Find(x => x.Id == cartId)?.FirstOrDefault()?.Items;
         }
     }
 }

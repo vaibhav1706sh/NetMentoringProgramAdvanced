@@ -15,7 +15,6 @@ namespace CartingService.BusinessLogicLayer
         {
             var entity = new Cart
             {
-                CartId = cart.CartId,
                 Id = cart.Id,
                 Items = cart?.Items?.Select(x => new Item
                 {
@@ -34,9 +33,9 @@ namespace CartingService.BusinessLogicLayer
             cartRepository.Insert(entity);
         }
 
-        public void AddItemToCart(ItemModel item)
+        public void AddItemToCart(ItemModel item, string cartId)
         {
-            var cart = cartRepository.GetCart(item.CartId);
+            var cart = cartRepository.GetCart(cartId);
             if (cart == null) throw new Exception("Cart does not exist");
             if(cart.Items==null) cart.Items = new List<Item>();
             cart.Items.Add(new Item
@@ -59,7 +58,6 @@ namespace CartingService.BusinessLogicLayer
             var items = cartRepository.GetItems(cartId);
             return items?.Select(x => new ItemModel
             {
-                CartId = cartId,
                 Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
@@ -70,6 +68,12 @@ namespace CartingService.BusinessLogicLayer
                     AltText = x.Image?.AltText
                 }
             }).ToList();
+        }
+
+        public bool CartExists(string cartId)
+        {
+            var cart = cartRepository.GetCart(cartId);
+            return cart != null;
         }
 
         public void RemoveItem(string cartId, string itemId)
